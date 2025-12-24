@@ -3,20 +3,38 @@ import coupleBlob from '@/assets/couple-blob.png';
 import Sparkles from '@/components/Sparkles';
 import FloatingElements from '@/components/FloatingElements';
 import CuteButton from '@/components/CuteButton';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel';
+
+// Varying sizes for collage photos
+const photoStyles = [
+  { width: 'w-32', height: 'h-32', rotate: 'rotate-3' },
+  { width: 'w-40', height: 'h-48', rotate: '-rotate-2' },
+  { width: 'w-36', height: 'h-36', rotate: 'rotate-6' },
+  { width: 'w-28', height: 'h-36', rotate: '-rotate-4' },
+  { width: 'w-44', height: 'h-40', rotate: 'rotate-2' },
+];
+
+// Scattered stickers with varying sizes
+const collageStickers = [
+  { emoji: '🌸', size: 'text-3xl', top: '15%', left: '5%', delay: 0 },
+  { emoji: '✨', size: 'text-2xl', top: '25%', right: '8%', delay: 0.3 },
+  { emoji: '🦋', size: 'text-4xl', top: '45%', left: '3%', delay: 0.6 },
+  { emoji: '🌻', size: 'text-xl', top: '55%', right: '5%', delay: 0.9 },
+  { emoji: '💫', size: 'text-3xl', top: '70%', left: '8%', delay: 1.2 },
+  { emoji: '🎀', size: 'text-2xl', top: '35%', left: '85%', delay: 0.4 },
+  { emoji: '🍰', size: 'text-4xl', top: '60%', right: '3%', delay: 0.7 },
+  { emoji: '🎂', size: 'text-xl', top: '80%', left: '15%', delay: 1 },
+  { emoji: '🌈', size: 'text-3xl', top: '10%', right: '15%', delay: 0.5 },
+  { emoji: '⭐', size: 'text-2xl', top: '85%', right: '12%', delay: 0.8 },
+  { emoji: '🎈', size: 'text-4xl', top: '20%', left: '80%', delay: 0.2 },
+  { emoji: '🧁', size: 'text-xl', top: '75%', left: '88%', delay: 1.1 },
+];
 
 const cuteMessages = [
-  "Looking absolutely adorable! 🌟",
-  "This smile melts my heart! 🥰",
-  "Too cute for words! ✨",
-  "My favorite person! 🌻",
-  "Pure cuteness overload! 😍",
+  "So adorable! 🌟",
+  "Cutie! 🥰",
+  "Precious! ✨",
+  "My fave! 🌻",
+  "Aww! 😍",
 ];
 
 const GalleryPage = () => {
@@ -39,85 +57,100 @@ const GalleryPage = () => {
   const validPhotos = photos.filter(p => p !== null);
 
   return (
-    <div className="min-h-screen bg-gradient-sunset flex flex-col items-center p-6 relative overflow-hidden">
-      <Sparkles count={20} />
+    <div className="min-h-screen bg-gradient-sunset flex flex-col items-center p-4 relative overflow-hidden">
+      <Sparkles count={25} />
       {showConfetti && <FloatingElements count={50} />}
       
-      {/* Decorative stickers */}
-      <div className="absolute top-4 left-4 text-2xl animate-float opacity-70">📸</div>
-      <div className="absolute top-8 right-6 text-2xl animate-float opacity-60" style={{ animationDelay: '0.5s' }}>✨</div>
+      {/* Scattered stickers around the page */}
+      {collageStickers.map((sticker, index) => (
+        <div
+          key={index}
+          className={`absolute ${sticker.size} animate-float opacity-70 z-20`}
+          style={{
+            top: sticker.top,
+            left: sticker.left,
+            right: sticker.right,
+            animationDelay: `${sticker.delay}s`,
+          }}
+        >
+          {sticker.emoji}
+        </div>
+      ))}
       
       {/* Header */}
-      <h1 className="text-3xl md:text-4xl font-handwritten text-foreground mt-6 mb-2 text-center z-10 animate-fade-slide-up">
+      <h1 className="text-2xl md:text-3xl font-handwritten text-foreground mt-4 mb-1 text-center z-10 animate-fade-slide-up">
         Your Beautiful Moments 📸
       </h1>
-      <p className="text-muted-foreground font-cute text-center mb-8 z-10 animate-fade-slide-up" style={{ animationDelay: '0.2s' }}>
-        A gallery of your cutest poses 🌟
+      <p className="text-muted-foreground font-cute text-sm text-center mb-4 z-10 animate-fade-slide-up" style={{ animationDelay: '0.2s' }}>
+        A collage of your cutest poses 🌟
       </p>
 
-      {/* Photo Carousel */}
-      <div className="w-full max-w-md z-10 mb-8 px-12">
+      {/* Photo Collage */}
+      <div className="w-full max-w-lg z-10 mb-6 relative min-h-[400px]">
         {validPhotos.length > 0 ? (
-          <Carousel className="w-full" opts={{ loop: true }}>
-            <CarouselContent>
-              {validPhotos.map((photo, index) => (
-                <CarouselItem key={index}>
-                  <div className="p-2">
-                    {/* Polaroid Style Frame */}
-                    <div 
-                      className="bg-card rounded-lg p-3 pb-14 shadow-glow mx-auto max-w-xs relative transition-transform duration-500"
-                      style={{ 
-                        transform: `rotate(${(index % 2 === 0 ? 1 : -1) * 2}deg)`,
-                      }}
-                    >
-                      <img 
-                        src={photo!}
-                        alt={`Memory ${index + 1}`}
-                        className="w-full aspect-square object-cover rounded-md"
-                      />
-                      {/* Caption */}
-                      <p className="absolute bottom-4 left-0 right-0 text-center font-handwritten text-lg text-primary">
-                        {cuteMessages[index % cuteMessages.length]}
-                      </p>
-                    </div>
+          <div className="flex flex-wrap justify-center items-center gap-3 p-4">
+            {validPhotos.map((photo, index) => {
+              const style = photoStyles[index % photoStyles.length];
+              const offsetX = (index % 3 - 1) * 8;
+              const offsetY = Math.sin(index) * 10;
+              
+              return (
+                <div 
+                  key={index}
+                  className={`${style.width} ${style.height} ${style.rotate} animate-fade-slide-up relative group`}
+                  style={{ 
+                    animationDelay: `${index * 0.15}s`,
+                    transform: `translateX(${offsetX}px) translateY(${offsetY}px)`,
+                  }}
+                >
+                  {/* Polaroid frame */}
+                  <div className="bg-card rounded-lg p-1.5 pb-6 shadow-glow h-full w-full relative transition-all duration-500 hover:scale-110 hover:z-30 hover:shadow-xl">
+                    <img 
+                      src={photo!}
+                      alt={`Memory ${index + 1}`}
+                      className="w-full h-[calc(100%-1rem)] object-cover rounded-md"
+                    />
+                    {/* Mini caption */}
+                    <p className="absolute bottom-1 left-0 right-0 text-center font-handwritten text-xs text-primary truncate px-1">
+                      {cuteMessages[index % cuteMessages.length]}
+                    </p>
                   </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="left-0 bg-card/80 border-primary/30 text-primary hover:bg-card hover:text-primary" />
-            <CarouselNext className="right-0 bg-card/80 border-primary/30 text-primary hover:bg-card hover:text-primary" />
-          </Carousel>
+                  
+                  {/* Random sticker on some photos */}
+                  {index % 2 === 0 && (
+                    <div className="absolute -top-2 -right-2 text-lg animate-bounce-gentle z-10">
+                      {['⭐', '💖', '🌟', '✨', '🎀'][index % 5]}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         ) : (
           <div className="text-center py-12">
+            <div className="text-6xl mb-4 animate-bounce-gentle">📷</div>
             <p className="font-cute text-muted-foreground">
-              No photos uploaded yet! 📷
+              No photos uploaded yet!
             </p>
             <p className="font-cute text-sm text-muted-foreground mt-2">
-              (Your beautiful memories will appear here)
+              (Your beautiful collage will appear here)
             </p>
           </div>
         )}
       </div>
 
-      {/* Photo count indicator */}
-      {validPhotos.length > 0 && (
-        <p className="font-cute text-sm text-muted-foreground z-10 mb-4 animate-fade-slide-up">
-          Swipe to see all {validPhotos.length} memories ✨
-        </p>
-      )}
-
       {/* Rotating couple blob */}
-      <div className="z-10 mb-6">
+      <div className="z-10 mb-4">
         <img 
           src={coupleBlob} 
           alt="Cute couple" 
-          className="w-32 h-32 animate-slow-rotate drop-shadow-lg"
+          className="w-24 h-24 animate-slow-rotate drop-shadow-lg"
         />
       </div>
 
       {/* Final Button */}
       {!showFinal && (
-        <div className="z-10 mb-8 animate-fade-slide-up" style={{ animationDelay: '0.8s' }}>
+        <div className="z-10 mb-6 animate-fade-slide-up" style={{ animationDelay: '0.8s' }}>
           <CuteButton onClick={handleForeverClick} variant="pulse">
             Forever Yours 🌟
           </CuteButton>
@@ -126,22 +159,17 @@ const GalleryPage = () => {
 
       {/* Final Message */}
       {showFinal && (
-        <div className="z-10 text-center animate-fade-slide-up mb-8">
-          <div className="bg-card rounded-3xl p-8 shadow-glow max-w-sm">
-            <h2 className="text-2xl md:text-3xl font-handwritten text-primary mb-4 glow-text animate-shimmer bg-clip-text">
+        <div className="z-10 text-center animate-fade-slide-up mb-6">
+          <div className="bg-card rounded-3xl p-6 shadow-glow max-w-sm">
+            <h2 className="text-xl md:text-2xl font-handwritten text-primary mb-3 glow-text animate-shimmer bg-clip-text">
               You will always be special to me 🌟
             </h2>
-            <p className="font-cute text-muted-foreground">
+            <p className="font-cute text-sm text-muted-foreground">
               Happy Birthday, Aditya! May all your dreams come true. 🎂✨
             </p>
           </div>
         </div>
       )}
-
-      {/* Decorative elements */}
-      <div className="absolute top-20 left-6 text-2xl animate-float opacity-50">🌸</div>
-      <div className="absolute top-40 right-6 text-2xl animate-float opacity-50" style={{ animationDelay: '0.5s' }}>🦋</div>
-      <div className="absolute bottom-40 left-8 text-2xl animate-float opacity-50" style={{ animationDelay: '1s' }}>🌻</div>
     </div>
   );
 };
