@@ -4,12 +4,12 @@ import FloatingElements from '@/components/FloatingElements';
 import CuteButton from '@/components/CuteButton';
 
 const cuteNotes = [
-  { id: 1, message: "Your smile lights up every room you walk into 🌟", emoji: "✨", color: "from-amber-100 to-orange-100" },
-  { id: 2, message: "Every moment with you is a beautiful adventure 🌸", emoji: "🦋", color: "from-yellow-100 to-amber-100" },
-  { id: 3, message: "You make ordinary days feel magical ✨", emoji: "🌈", color: "from-orange-100 to-rose-100" },
-  { id: 4, message: "Your laughter is the sweetest melody 🎵", emoji: "🎶", color: "from-rose-100 to-amber-100" },
-  { id: 5, message: "You're one of a kind, never forget that 🌙", emoji: "⭐", color: "from-amber-100 to-yellow-100" },
-  { id: 6, message: "Being with you is my happy place 🏠", emoji: "🌻", color: "from-yellow-100 to-orange-100" },
+  { id: 1, message: "Your smile lights up every room you walk into 🌟", emoji: "✨" },
+  { id: 2, message: "Every moment with you is a beautiful adventure 🌸", emoji: "🦋" },
+  { id: 3, message: "You make ordinary days feel magical ✨", emoji: "🌈" },
+  { id: 4, message: "Your laughter is the sweetest melody 🎵", emoji: "🎶" },
+  { id: 5, message: "You're one of a kind, never forget that 🌙", emoji: "⭐" },
+  { id: 6, message: "Being with you is my happy place 🏠", emoji: "🌻" },
 ];
 
 const JustForYouPage = () => {
@@ -42,64 +42,48 @@ const JustForYouPage = () => {
       </h1>
       <p className="text-muted-foreground font-cute mb-6 z-10">Tap the cards to reveal special messages!</p>
 
-      {/* Circular Cards Layout */}
-      <div className="relative w-full max-w-sm h-[400px] z-10 mb-8">
-        {cuteNotes.map((note, index) => {
-          const angle = (index * 60) - 60; // 360/6 = 60 degrees apart
-          const radius = 130;
-          const x = Math.cos((angle * Math.PI) / 180) * radius;
-          const y = Math.sin((angle * Math.PI) / 180) * radius;
-          
-          return (
-            <div
-              key={note.id}
-              onClick={() => handleCardClick(note.id)}
-              className="absolute cursor-pointer"
-              style={{ 
-                left: `calc(50% + ${x}px - 55px)`,
-                top: `calc(50% + ${y}px - 55px)`,
-                animationDelay: `${index * 0.1}s` 
+      {/* Cards Grid */}
+      <div className="grid grid-cols-2 gap-4 w-full max-w-md z-10 mb-8">
+        {cuteNotes.map((note, index) => (
+          <div
+            key={note.id}
+            onClick={() => handleCardClick(note.id)}
+            className="cursor-pointer perspective-1000"
+            style={{ animationDelay: `${index * 0.1}s` }}
+          >
+            <div 
+              className={`relative w-full h-40 transition-all duration-700 ease-out transform-style-preserve-3d`}
+              style={{
+                transformStyle: 'preserve-3d',
+                transform: revealedCards.includes(note.id) ? 'rotateY(180deg)' : 'rotateY(0deg)',
               }}
             >
+              {/* Front - Blurred/Locked */}
               <div 
-                className={`relative w-28 h-28 transition-all duration-700 ease-out`}
-                style={{
-                  transformStyle: 'preserve-3d',
-                  transform: revealedCards.includes(note.id) ? 'rotateY(180deg)' : 'rotateY(0deg)',
-                }}
+                className="absolute inset-0 bg-card rounded-2xl shadow-soft flex items-center justify-center backface-hidden border-2 border-primary/20"
+                style={{ backfaceVisibility: 'hidden' }}
               >
-                {/* Front - Cute circle */}
-                <div 
-                  className={`absolute inset-0 rounded-full bg-gradient-to-br ${note.color} shadow-soft flex items-center justify-center border-4 border-white/50`}
-                  style={{ backfaceVisibility: 'hidden' }}
-                >
-                  <div className="text-center">
-                    <span className="text-3xl block animate-gentle-bounce">{note.emoji}</span>
-                    <span className="text-xs text-muted-foreground font-cute mt-1">Tap me!</span>
-                  </div>
-                </div>
-                
-                {/* Back - Revealed message */}
-                <div 
-                  className={`absolute inset-0 rounded-full bg-gradient-to-br ${note.color} shadow-glow p-3 flex items-center justify-center border-4 border-primary/30`}
-                  style={{ 
-                    backfaceVisibility: 'hidden',
-                    transform: 'rotateY(180deg)',
-                  }}
-                >
-                  <p className="text-xs font-cute text-foreground text-center leading-tight">
-                    {note.message}
-                  </p>
+                <div className="text-center">
+                  <span className="text-4xl mb-2 block animate-gentle-bounce">{note.emoji}</span>
+                  <span className="text-sm text-muted-foreground font-cute">Tap to reveal</span>
                 </div>
               </div>
+              
+              {/* Back - Revealed */}
+              <div 
+                className="absolute inset-0 bg-pastel-cream rounded-2xl shadow-glow p-4 flex items-center justify-center border-2 border-primary/30"
+                style={{ 
+                  backfaceVisibility: 'hidden',
+                  transform: 'rotateY(180deg)',
+                }}
+              >
+                <p className="text-sm md:text-base font-cute text-foreground text-center leading-relaxed">
+                  {note.message}
+                </p>
+              </div>
             </div>
-          );
-        })}
-        
-        {/* Center decoration */}
-        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl animate-slow-rotate">
-          🎂
-        </div>
+          </div>
+        ))}
       </div>
 
       {/* See More Button */}
