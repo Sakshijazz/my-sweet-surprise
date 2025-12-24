@@ -3,6 +3,13 @@ import coupleBlob from '@/assets/couple-blob.png';
 import Sparkles from '@/components/Sparkles';
 import FloatingElements from '@/components/FloatingElements';
 import CuteButton from '@/components/CuteButton';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
 
 const cuteMessages = [
   "Looking absolutely adorable! 🌟",
@@ -48,32 +55,38 @@ const GalleryPage = () => {
         A gallery of your cutest poses 🌟
       </p>
 
-      {/* Photo Gallery */}
-      <div className="w-full max-w-md z-10 space-y-6 mb-8">
+      {/* Photo Carousel */}
+      <div className="w-full max-w-md z-10 mb-8 px-12">
         {validPhotos.length > 0 ? (
-          validPhotos.map((photo, index) => (
-            <div 
-              key={index}
-              className="animate-fade-slide-up"
-              style={{ 
-                animationDelay: `${index * 0.15}s`,
-                transform: `rotate(${(index % 2 === 0 ? 1 : -1) * (2 + Math.random() * 3)}deg)`,
-              }}
-            >
-              {/* Polaroid Style Frame */}
-              <div className="bg-card rounded-lg p-3 pb-12 shadow-glow mx-auto max-w-xs relative">
-                <img 
-                  src={photo!}
-                  alt={`Memory ${index + 1}`}
-                  className="w-full aspect-square object-cover rounded-md"
-                />
-                {/* Caption */}
-                <p className="absolute bottom-3 left-0 right-0 text-center font-handwritten text-lg text-primary">
-                  {cuteMessages[index % cuteMessages.length]}
-                </p>
-              </div>
-            </div>
-          ))
+          <Carousel className="w-full" opts={{ loop: true }}>
+            <CarouselContent>
+              {validPhotos.map((photo, index) => (
+                <CarouselItem key={index}>
+                  <div className="p-2">
+                    {/* Polaroid Style Frame */}
+                    <div 
+                      className="bg-card rounded-lg p-3 pb-14 shadow-glow mx-auto max-w-xs relative transition-transform duration-500"
+                      style={{ 
+                        transform: `rotate(${(index % 2 === 0 ? 1 : -1) * 2}deg)`,
+                      }}
+                    >
+                      <img 
+                        src={photo!}
+                        alt={`Memory ${index + 1}`}
+                        className="w-full aspect-square object-cover rounded-md"
+                      />
+                      {/* Caption */}
+                      <p className="absolute bottom-4 left-0 right-0 text-center font-handwritten text-lg text-primary">
+                        {cuteMessages[index % cuteMessages.length]}
+                      </p>
+                    </div>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="left-0 bg-card/80 border-primary/30 text-primary hover:bg-card hover:text-primary" />
+            <CarouselNext className="right-0 bg-card/80 border-primary/30 text-primary hover:bg-card hover:text-primary" />
+          </Carousel>
         ) : (
           <div className="text-center py-12">
             <p className="font-cute text-muted-foreground">
@@ -85,6 +98,13 @@ const GalleryPage = () => {
           </div>
         )}
       </div>
+
+      {/* Photo count indicator */}
+      {validPhotos.length > 0 && (
+        <p className="font-cute text-sm text-muted-foreground z-10 mb-4 animate-fade-slide-up">
+          Swipe to see all {validPhotos.length} memories ✨
+        </p>
+      )}
 
       {/* Rotating couple blob */}
       <div className="z-10 mb-6">
