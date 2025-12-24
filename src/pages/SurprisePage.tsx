@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import giftBox from '@/assets/gift-box.png';
 import Sparkles from '@/components/Sparkles';
-import FloatingHearts from '@/components/FloatingHearts';
+import FloatingElements from '@/components/FloatingElements';
 import CuteButton from '@/components/CuteButton';
 
 const SurprisePage = () => {
@@ -26,9 +26,13 @@ const SurprisePage = () => {
   };
 
   return (
-    <div className={`min-h-screen bg-gradient-romantic flex flex-col items-center justify-center p-6 relative overflow-hidden transition-all duration-600 ${isExiting ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
+    <div className={`min-h-screen bg-gradient-sunset flex flex-col items-center justify-center p-6 relative overflow-hidden transition-all duration-600 ${isExiting ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
       <Sparkles count={25} />
-      {isOpened && <FloatingHearts count={30} />}
+      {isOpened && <FloatingElements count={30} />}
+      
+      {/* Decorative stickers */}
+      <div className="absolute top-6 left-6 text-2xl animate-float opacity-70">🎉</div>
+      <div className="absolute top-10 right-8 text-2xl animate-float opacity-60" style={{ animationDelay: '0.5s' }}>✨</div>
       
       {!isOpened ? (
         <>
@@ -62,8 +66,8 @@ const SurprisePage = () => {
           {showMessage && (
             <>
               <div className="bg-card rounded-3xl p-8 shadow-glow max-w-sm mb-8 animate-fade-slide-up">
-                <h2 className="text-3xl md:text-4xl font-handwritten text-heart-pink mb-4 glow-text">
-                  Ask Anshika 💖
+                <h2 className="text-3xl md:text-4xl font-handwritten text-primary mb-4 glow-text">
+                  Ask Anshika 🌟
                 </h2>
                 <p className="font-cute text-muted-foreground">
                   Your special surprise is waiting...
@@ -71,7 +75,7 @@ const SurprisePage = () => {
               </div>
 
               <CuteButton onClick={handleContinue} variant="pulse">
-                Continue 💕
+                Continue 🌟
               </CuteButton>
             </>
           )}
@@ -81,7 +85,7 @@ const SurprisePage = () => {
       {/* Decorative elements */}
       <div className="absolute top-20 left-10 text-3xl animate-float opacity-60">🎀</div>
       <div className="absolute top-32 right-8 text-2xl animate-float opacity-50" style={{ animationDelay: '0.5s' }}>✨</div>
-      <div className="absolute bottom-32 left-8 text-2xl animate-float opacity-50" style={{ animationDelay: '1s' }}>💝</div>
+      <div className="absolute bottom-32 left-8 text-2xl animate-float opacity-50" style={{ animationDelay: '1s' }}>🌸</div>
     </div>
   );
 };
