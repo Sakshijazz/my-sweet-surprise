@@ -1,19 +1,25 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import envelope from '@/assets/envelope.png';
 import Sparkles from '@/components/Sparkles';
 import CuteButton from '@/components/CuteButton';
 
 const LittleNotePage = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const [flapOpen, setFlapOpen] = useState(false);
+  const [letterSliding, setLetterSliding] = useState(false);
   const [showLetter, setShowLetter] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
 
   const handleEnvelopeClick = () => {
     if (!isOpen) {
       setIsOpen(true);
-      setTimeout(() => setShowLetter(true), 800);
+      // First open the flap
+      setTimeout(() => setFlapOpen(true), 100);
+      // Then slide out the letter
+      setTimeout(() => setLetterSliding(true), 600);
+      // Finally show the full letter preview
+      setTimeout(() => setShowLetter(true), 1200);
     }
   };
 
@@ -35,19 +41,77 @@ const LittleNotePage = () => {
         A little note for you…
       </h2>
 
-      {/* Envelope */}
+      {/* Envelope with animation */}
       <div 
-        className={`relative z-10 cursor-pointer transition-all duration-700 ease-out ${isOpen ? 'scale-110' : 'animate-gentle-bounce hover:scale-105'}`}
+        className={`relative z-10 cursor-pointer transition-all duration-700 ease-out ${!isOpen ? 'animate-gentle-bounce hover:scale-105' : ''}`}
         onClick={handleEnvelopeClick}
+        style={{ perspective: '1000px' }}
       >
-        <img 
-          src={envelope} 
-          alt="Love envelope" 
-          className={`w-48 h-48 md:w-64 md:h-64 drop-shadow-lg transition-all duration-700 ${isOpen ? 'opacity-80' : ''}`}
-          style={{
-            transform: isOpen ? 'rotateX(10deg)' : 'rotateX(0deg)',
-          }}
-        />
+        {/* Envelope Body */}
+        <div className="relative w-64 h-44 md:w-80 md:h-56">
+          {/* Back of envelope */}
+          <div className="absolute inset-0 bg-gradient-to-br from-amber-100 to-orange-100 rounded-xl shadow-soft border-2 border-amber-200" />
+          
+          {/* Inner paper (slides out) */}
+          <div 
+            className={`absolute left-4 right-4 bg-white rounded-lg shadow-md transition-all duration-700 ease-out ${
+              letterSliding ? 'h-32 -top-24 md:h-40 md:-top-32' : 'h-20 top-4'
+            }`}
+            style={{ zIndex: letterSliding ? 5 : 1 }}
+          >
+            <div className="p-3 font-handwritten text-sm text-foreground">
+              {letterSliding && (
+                <>
+                  <p className="text-primary font-semibold">My dearest Aditya,</p>
+                  <p className="text-xs text-muted-foreground mt-1">On this special day...</p>
+                </>
+              )}
+            </div>
+          </div>
+          
+          {/* Front flap (triangular) */}
+          <div 
+            className={`absolute top-0 left-0 right-0 h-24 md:h-28 origin-top transition-all duration-500 ease-out`}
+            style={{ 
+              transform: flapOpen ? 'rotateX(180deg)' : 'rotateX(0deg)',
+              transformStyle: 'preserve-3d',
+              zIndex: flapOpen ? 0 : 10
+            }}
+          >
+            {/* Flap front */}
+            <div 
+              className="absolute inset-0"
+              style={{ 
+                backfaceVisibility: 'hidden',
+                clipPath: 'polygon(0 0, 50% 100%, 100% 0)',
+              }}
+            >
+              <div className="w-full h-full bg-gradient-to-br from-amber-200 to-orange-200 rounded-t-xl border-2 border-amber-300" />
+            </div>
+            {/* Flap back */}
+            <div 
+              className="absolute inset-0"
+              style={{ 
+                backfaceVisibility: 'hidden',
+                transform: 'rotateX(180deg)',
+                clipPath: 'polygon(0 100%, 50% 0, 100% 100%)',
+              }}
+            >
+              <div className="w-full h-full bg-gradient-to-br from-amber-100 to-orange-100" />
+            </div>
+          </div>
+          
+          {/* Front of envelope (bottom part) */}
+          <div 
+            className="absolute bottom-0 left-0 right-0 h-28 md:h-32 bg-gradient-to-br from-amber-200 to-orange-200 rounded-b-xl border-2 border-t-0 border-amber-300"
+            style={{ zIndex: 2 }}
+          >
+            {/* Heart seal */}
+            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 text-3xl">
+              {!flapOpen && '💌'}
+            </div>
+          </div>
+        </div>
         
         {!isOpen && (
           <p className="text-center mt-4 font-cute text-muted-foreground animate-pulse">
@@ -61,7 +125,7 @@ const LittleNotePage = () => {
         <div className="mt-8 z-10 animate-fade-slide-up max-w-sm">
           <div className="bg-pastel-cream rounded-3xl p-6 shadow-glow">
             <div className="font-handwritten text-lg text-foreground leading-relaxed">
-              <p className="mb-4">My dearest Aditya,</p>
+              <p className="mb-4 text-primary font-semibold">My dearest Aditya,</p>
               <p className="text-muted-foreground">
                 On this special day, I want you to know how much you mean to me...
               </p>

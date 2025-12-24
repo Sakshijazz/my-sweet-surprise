@@ -2,12 +2,20 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FloatingElements from '@/components/FloatingElements';
 
+const warningMessages = [
+  "⚠️ WARNING: TOO CUTE TO HANDLE 😭🌟",
+  "🚨 ALERT: CUTENESS OVERLOAD! 💫",
+  "⚡ SYSTEM ERROR: ADORABLE DETECTED! 🥺",
+  "🔥 DANGER: MAXIMUM CUTENESS! ✨",
+];
+
 const CutenessPage = () => {
   const navigate = useNavigate();
   const [progress, setProgress] = useState(0);
   const [showWarning, setShowWarning] = useState(false);
   const [isShaking, setIsShaking] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
+  const [warningIndex, setWarningIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -39,6 +47,16 @@ const CutenessPage = () => {
       }, 2000);
     }
   }, [progress, showWarning, navigate]);
+
+  // Fast toggling warning messages
+  useEffect(() => {
+    if (showWarning) {
+      const toggleInterval = setInterval(() => {
+        setWarningIndex(prev => (prev + 1) % warningMessages.length);
+      }, 200); // Fast toggle every 200ms
+      return () => clearInterval(toggleInterval);
+    }
+  }, [showWarning]);
 
   return (
     <div className={`min-h-screen bg-gradient-sunset flex flex-col items-center justify-center p-6 relative overflow-hidden transition-all duration-600 ${isExiting ? 'opacity-0 scale-110' : 'opacity-100 scale-100'}`}>
@@ -87,12 +105,12 @@ const CutenessPage = () => {
         </p>
       </div>
 
-      {/* Warning Message */}
+      {/* Warning Message with fast toggle */}
       {showWarning && (
         <div className="mt-8 z-10 animate-fade-slide-up">
-          <div className={`bg-card rounded-3xl p-6 shadow-glow text-center ${isShaking ? 'animate-shake' : 'animate-gentle-bounce'}`}>
-            <p className="text-xl md:text-2xl font-cute font-bold text-primary">
-              ⚠️ WARNING: TOO CUTE TO HANDLE 😭🌟
+          <div className={`bg-card rounded-3xl p-6 shadow-glow text-center animate-gentle-bounce`}>
+            <p className="text-xl md:text-2xl font-cute font-bold text-primary transition-all duration-100">
+              {warningMessages[warningIndex]}
             </p>
           </div>
         </div>
