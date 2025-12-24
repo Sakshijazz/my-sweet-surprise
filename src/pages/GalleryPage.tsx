@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import coupleBlob from '@/assets/couple-blob.png';
 import Sparkles from '@/components/Sparkles';
-import FloatingHearts from '@/components/FloatingHearts';
+import FloatingElements from '@/components/FloatingElements';
 import CuteButton from '@/components/CuteButton';
 
 const cuteMessages = [
-  "Looking absolutely adorable! 💕",
+  "Looking absolutely adorable! 🌟",
   "This smile melts my heart! 🥰",
   "Too cute for words! ✨",
-  "My favorite person! 💖",
+  "My favorite person! 🌻",
   "Pure cuteness overload! 😍",
 ];
 
@@ -32,16 +32,20 @@ const GalleryPage = () => {
   const validPhotos = photos.filter(p => p !== null);
 
   return (
-    <div className="min-h-screen bg-gradient-soft flex flex-col items-center p-6 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-sunset flex flex-col items-center p-6 relative overflow-hidden">
       <Sparkles count={20} />
-      {showConfetti && <FloatingHearts count={50} />}
+      {showConfetti && <FloatingElements count={50} />}
+      
+      {/* Decorative stickers */}
+      <div className="absolute top-4 left-4 text-2xl animate-float opacity-70">📸</div>
+      <div className="absolute top-8 right-6 text-2xl animate-float opacity-60" style={{ animationDelay: '0.5s' }}>✨</div>
       
       {/* Header */}
       <h1 className="text-3xl md:text-4xl font-handwritten text-foreground mt-6 mb-2 text-center z-10 animate-fade-slide-up">
         Your Beautiful Moments 📸
       </h1>
       <p className="text-muted-foreground font-cute text-center mb-8 z-10 animate-fade-slide-up" style={{ animationDelay: '0.2s' }}>
-        A gallery of your cutest poses 💕
+        A gallery of your cutest poses 🌟
       </p>
 
       {/* Photo Gallery */}
@@ -64,7 +68,7 @@ const GalleryPage = () => {
                   className="w-full aspect-square object-cover rounded-md"
                 />
                 {/* Caption */}
-                <p className="absolute bottom-3 left-0 right-0 text-center font-handwritten text-lg text-heart-pink">
+                <p className="absolute bottom-3 left-0 right-0 text-center font-handwritten text-lg text-primary">
                   {cuteMessages[index % cuteMessages.length]}
                 </p>
               </div>
@@ -95,7 +99,7 @@ const GalleryPage = () => {
       {!showFinal && (
         <div className="z-10 mb-8 animate-fade-slide-up" style={{ animationDelay: '0.8s' }}>
           <CuteButton onClick={handleForeverClick} variant="pulse">
-            Forever Yours 💞
+            Forever Yours 🌟
           </CuteButton>
         </div>
       )}
@@ -104,11 +108,11 @@ const GalleryPage = () => {
       {showFinal && (
         <div className="z-10 text-center animate-fade-slide-up mb-8">
           <div className="bg-card rounded-3xl p-8 shadow-glow max-w-sm">
-            <h2 className="text-2xl md:text-3xl font-handwritten text-heart-pink mb-4 glow-text animate-shimmer bg-clip-text">
-              You will always be special to me 💖
+            <h2 className="text-2xl md:text-3xl font-handwritten text-primary mb-4 glow-text animate-shimmer bg-clip-text">
+              You will always be special to me 🌟
             </h2>
             <p className="font-cute text-muted-foreground">
-              Happy Birthday, my love! May all your dreams come true. 🎂✨
+              Happy Birthday, Aditya! May all your dreams come true. 🎂✨
             </p>
           </div>
         </div>
@@ -116,8 +120,8 @@ const GalleryPage = () => {
 
       {/* Decorative elements */}
       <div className="absolute top-20 left-6 text-2xl animate-float opacity-50">🌸</div>
-      <div className="absolute top-40 right-6 text-2xl animate-float opacity-50" style={{ animationDelay: '0.5s' }}>💫</div>
-      <div className="absolute bottom-40 left-8 text-2xl animate-float opacity-50" style={{ animationDelay: '1s' }}>🌷</div>
+      <div className="absolute top-40 right-6 text-2xl animate-float opacity-50" style={{ animationDelay: '0.5s' }}>🦋</div>
+      <div className="absolute bottom-40 left-8 text-2xl animate-float opacity-50" style={{ animationDelay: '1s' }}>🌻</div>
     </div>
   );
 };

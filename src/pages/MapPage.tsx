@@ -59,8 +59,12 @@ const MapPage = () => {
   };
 
   return (
-    <div className={`min-h-screen bg-gradient-soft flex flex-col items-center p-6 relative overflow-hidden transition-all duration-600 ${isExiting ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
+    <div className={`min-h-screen bg-gradient-sunset flex flex-col items-center p-6 relative overflow-hidden transition-all duration-600 ${isExiting ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
       <Sparkles count={15} />
+      
+      {/* Decorative stickers */}
+      <div className="absolute top-4 left-4 text-2xl animate-float opacity-70">📸</div>
+      <div className="absolute top-8 right-6 text-2xl animate-float opacity-60" style={{ animationDelay: '0.5s' }}>🌟</div>
       
       {/* Header */}
       <h1 className="text-2xl md:text-3xl font-handwritten text-foreground mt-6 mb-4 text-center z-10 animate-fade-slide-up">
@@ -80,56 +84,84 @@ const MapPage = () => {
         className="hidden"
       />
 
-      {/* Map with stages */}
+      {/* Map with curved path */}
       <div className="relative w-full max-w-sm z-10 py-4">
-        {/* Path line */}
-        <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-pastel-lavender transform -translate-x-1/2 rounded-full" />
+        {/* Curved SVG path */}
+        <svg 
+          className="absolute inset-0 w-full h-full pointer-events-none" 
+          viewBox="0 0 300 500"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M 150 30 
+               Q 50 80, 150 130 
+               Q 250 180, 150 230 
+               Q 50 280, 150 330 
+               Q 250 380, 150 430
+               Q 50 480, 150 480"
+            fill="none"
+            stroke="hsl(45 80% 85%)"
+            strokeWidth="8"
+            strokeLinecap="round"
+            strokeDasharray="12 8"
+            className="opacity-60"
+          />
+        </svg>
         
-        {stages.map((stage, index) => (
-          <div 
-            key={stage.id}
-            className={`relative flex items-center mb-8 last:mb-0 ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}
-            style={{ animationDelay: `${index * 0.1}s` }}
-          >
-            {/* Stage circle */}
+        {stages.map((stage, index) => {
+          // Position stages along the curve
+          const yPos = 30 + index * 100;
+          const xOffset = index % 2 === 0 ? -60 : 60;
+          
+          return (
             <div 
-              className={`absolute left-1/2 transform -translate-x-1/2 w-14 h-14 rounded-full flex items-center justify-center cursor-pointer transition-all duration-500 ${
-                stage.completed 
-                  ? 'bg-heart-pink shadow-glow scale-110' 
-                  : stage.id === currentStage 
-                    ? 'bg-primary animate-gentle-bounce shadow-soft' 
-                    : 'bg-muted opacity-60'
-              }`}
-              onClick={() => handleStageClick(stage.id)}
+              key={stage.id}
+              className="relative flex items-center mb-12 last:mb-0"
+              style={{ 
+                animationDelay: `${index * 0.1}s`,
+                marginLeft: `calc(50% + ${xOffset}px - 28px)`,
+              }}
             >
-              {stage.completed ? (
-                stage.photo ? (
-                  <img 
-                    src={stage.photo} 
-                    alt={`Stage ${stage.id}`}
-                    className="w-full h-full rounded-full object-cover"
-                  />
+              {/* Stage circle */}
+              <div 
+                className={`w-14 h-14 rounded-full flex items-center justify-center cursor-pointer transition-all duration-500 border-4 ${
+                  stage.completed 
+                    ? 'bg-primary shadow-glow scale-110 border-primary/30' 
+                    : stage.id === currentStage 
+                      ? 'bg-accent animate-gentle-bounce shadow-soft border-accent/30' 
+                      : 'bg-muted opacity-60 border-muted/30'
+                }`}
+                onClick={() => handleStageClick(stage.id)}
+              >
+                {stage.completed ? (
+                  stage.photo ? (
+                    <img 
+                      src={stage.photo} 
+                      alt={`Stage ${stage.id}`}
+                      className="w-full h-full rounded-full object-cover"
+                    />
+                  ) : (
+                    <span className="text-2xl">✓</span>
+                  )
                 ) : (
-                  <span className="text-2xl">✓</span>
-                )
-              ) : (
-                <span className="text-xl font-cute font-bold text-primary-foreground">{stage.id}</span>
-              )}
+                  <span className="text-xl font-cute font-bold text-primary-foreground">{stage.id}</span>
+                )}
+              </div>
+              
+              {/* Stage label */}
+              <div 
+                className={`absolute w-28 p-2 rounded-2xl text-center transition-all duration-500 ${
+                  index % 2 === 0 ? 'right-full mr-4' : 'left-full ml-4'
+                } ${stage.completed ? 'bg-pastel-cream shadow-soft' : 'bg-card'}`}
+              >
+                <p className="font-cute text-xs text-foreground">{stage.name}</p>
+                {stage.id === currentStage && !stage.completed && (
+                  <p className="text-xs text-primary mt-1 animate-pulse">Tap to upload!</p>
+                )}
+              </div>
             </div>
-            
-            {/* Stage label */}
-            <div 
-              className={`w-32 p-3 rounded-2xl text-center transition-all duration-500 ${
-                index % 2 === 0 ? 'mr-auto ml-4' : 'ml-auto mr-4'
-              } ${stage.completed ? 'bg-pastel-cream shadow-soft' : 'bg-card'}`}
-            >
-              <p className="font-cute text-sm text-foreground">{stage.name}</p>
-              {stage.id === currentStage && !stage.completed && (
-                <p className="text-xs text-heart-pink mt-1 animate-pulse">Tap to upload!</p>
-              )}
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Unlock Button */}
@@ -149,11 +181,15 @@ const MapPage = () => {
           <div 
             key={stage.id}
             className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              stage.completed ? 'bg-heart-pink' : 'bg-muted'
+              stage.completed ? 'bg-primary' : 'bg-muted'
             }`}
           />
         ))}
       </div>
+      
+      {/* Bottom stickers */}
+      <div className="absolute bottom-20 left-6 text-2xl animate-float opacity-60" style={{ animationDelay: '1s' }}>🎀</div>
+      <div className="absolute bottom-24 right-8 text-xl animate-float opacity-70" style={{ animationDelay: '1.2s' }}>✨</div>
     </div>
   );
 };
