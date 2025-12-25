@@ -70,7 +70,7 @@ const SurprisePage = () => {
                   Ask Anshika 🌟
                 </h2>
                 <p className="font-cute text-muted-foreground text-sm sm:text-base">
-                  Your special surprise is waiting...
+                  Your gift is waiting...
                 </p>
               </div>
 

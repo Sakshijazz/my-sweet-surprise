@@ -74,7 +74,7 @@ const WelcomePage = () => {
             onClick={handleContinue}
             variant="pulse"
           >
-            Open Your Gift 🎁
+            Let's Go 🚀
           </CuteButton>
         </div>
       )}
