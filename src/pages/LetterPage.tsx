@@ -7,18 +7,18 @@ const letterContent = `My dearest Aditya,
 
 On this beautiful day, I want to celebrate the most amazing person I know - YOU! 🎂
 
-Every single day with you feels like a blessing. Your smile lights up my world, your laughter is my favorite melody, and your presence is the greatest gift I've ever received.
+Every single day with you felt like a blessing. Your smile lights up my world, your laughter is my favorite melody, and your presence is the greatest gift I've ever received.
 
 You have this incredible way of making everything better. Even on the hardest days, just being with you makes me feel like everything will be okay.
 
-I love how you scrunch your nose when you laugh. I love how passionate you get about the things you care about. I love every little quirk that makes you uniquely YOU.
+I love care for others around you. I love how passionate you get about the things you care about. I love every little quirk that makes you uniquely YOU.
 
-Thank you for being my best friend, my partner, my everything. Thank you for choosing to share your life with me every single day.
+Thank you for being my everything. Thank you for choosing to share your life with me every single day.
 
 Happy Birthday! May this year bring you all the happiness, success, and dreams come true that you deserve.
 
 Yours truly,
-Anshika 💕`;
+Sakshi 💕`;
 
 const LetterPage = () => {
   const navigate = useNavigate();
