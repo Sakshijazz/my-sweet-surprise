@@ -1,16 +1,34 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import coupleBlob from '@/assets/couple-blob.png';
 import Sparkles from '@/components/Sparkles';
 import FloatingElements from '@/components/FloatingElements';
 import CuteButton from '@/components/CuteButton';
 
+import teddyImg from '@/assets/teddy.jpg';
+import ghostImg from '@/assets/cute-ghost.jpg';
+import bunnyImg from '@/assets/cute-bunny.jpg';
+import puppyImg from '@/assets/cute-puppy.jpg';
+import octopusImg from '@/assets/cute-octopus.jpg';
+import rabbitImg from '@/assets/cute-rabbit.jpg';
+
 // Varying sizes for collage photos
 const photoStyles = [
-  { width: 'w-32', height: 'h-32', rotate: 'rotate-3' },
-  { width: 'w-40', height: 'h-48', rotate: '-rotate-2' },
-  { width: 'w-36', height: 'h-36', rotate: 'rotate-6' },
-  { width: 'w-28', height: 'h-36', rotate: '-rotate-4' },
-  { width: 'w-44', height: 'h-40', rotate: 'rotate-2' },
+  { rotate: 'rotate-3' },
+  { rotate: '-rotate-2' },
+  { rotate: 'rotate-6' },
+  { rotate: '-rotate-4' },
+  { rotate: 'rotate-2' },
+  { rotate: '-rotate-3' },
+];
+
+// Static photos for gallery
+const staticPhotos = [
+  { src: teddyImg, caption: "So adorable! 🧸" },
+  { src: ghostImg, caption: "Cutie! 👻" },
+  { src: bunnyImg, caption: "Precious! 🐰" },
+  { src: puppyImg, caption: "My fave! 🐕" },
+  { src: octopusImg, caption: "Aww! 🐙" },
+  { src: rabbitImg, caption: "Sweet! 🐇" },
 ];
 
 // Scattered stickers with varying sizes
@@ -29,32 +47,14 @@ const collageStickers = [
   { emoji: '🧁', size: 'text-xl', top: '75%', left: '88%', delay: 1.1 },
 ];
 
-const cuteMessages = [
-  "So adorable! 🌟",
-  "Cutie! 🥰",
-  "Precious! ✨",
-  "My fave! 🌻",
-  "Aww! 😍",
-];
-
 const GalleryPage = () => {
-  const [photos, setPhotos] = useState<(string | null)[]>([]);
   const [showConfetti, setShowConfetti] = useState(false);
   const [showFinal, setShowFinal] = useState(false);
-
-  useEffect(() => {
-    const storedPhotos = sessionStorage.getItem('uploadedPhotos');
-    if (storedPhotos) {
-      setPhotos(JSON.parse(storedPhotos));
-    }
-  }, []);
 
   const handleForeverClick = () => {
     setShowConfetti(true);
     setTimeout(() => setShowFinal(true), 1000);
   };
-
-  const validPhotos = photos.filter(p => p !== null);
 
   return (
     <div className="min-h-screen min-h-[100dvh] bg-gradient-sunset flex flex-col items-center px-3 py-4 sm:p-4 relative overflow-hidden">
@@ -79,64 +79,51 @@ const GalleryPage = () => {
       
       {/* Header */}
       <h1 className="text-xl sm:text-2xl md:text-3xl font-handwritten text-foreground mt-2 sm:mt-4 mb-1 text-center z-10 animate-fade-slide-up">
-        Your Beautiful Moments 📸
+        Your Cute Gallery 📸
       </h1>
       <p className="text-muted-foreground font-cute text-xs sm:text-sm text-center mb-3 sm:mb-4 z-10 animate-fade-slide-up" style={{ animationDelay: '0.2s' }}>
-        A collage of your cutest poses 🌟
+        A collection of adorable cuties 🌟
       </p>
 
       {/* Photo Collage */}
-      <div className="w-full max-w-sm sm:max-w-lg z-10 mb-4 sm:mb-6 relative min-h-[300px] sm:min-h-[400px]">
-        {validPhotos.length > 0 ? (
-          <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3 p-2 sm:p-4">
-            {validPhotos.map((photo, index) => {
-              const style = photoStyles[index % photoStyles.length];
-              const offsetX = (index % 3 - 1) * 6;
-              const offsetY = Math.sin(index) * 8;
-              
-              return (
-                <div 
-                  key={index}
-                  className={`w-24 h-24 sm:${style.width} sm:${style.height} ${style.rotate} animate-fade-slide-up relative group`}
-                  style={{ 
-                    animationDelay: `${index * 0.15}s`,
-                    transform: `translateX(${offsetX}px) translateY(${offsetY}px)`,
-                  }}
-                >
-                  {/* Polaroid frame */}
-                  <div className="bg-card rounded-lg p-1 pb-4 sm:p-1.5 sm:pb-6 shadow-glow h-full w-full relative transition-all duration-500 hover:scale-110 hover:z-30 hover:shadow-xl">
+      <div className="w-full max-w-sm sm:max-w-lg z-10 mb-4 sm:mb-6 relative">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 p-2 sm:p-4">
+          {staticPhotos.map((photo, index) => {
+            const style = photoStyles[index % photoStyles.length];
+            
+            return (
+              <div 
+                key={index}
+                className={`${style.rotate} animate-fade-slide-up relative group`}
+                style={{ 
+                  animationDelay: `${index * 0.15}s`,
+                }}
+              >
+                {/* Polaroid frame */}
+                <div className="bg-card rounded-lg p-1.5 pb-6 sm:p-2 sm:pb-8 shadow-glow h-full w-full relative transition-all duration-500 hover:scale-110 hover:z-30 hover:shadow-xl">
+                  <div className="aspect-square overflow-hidden rounded-md">
                     <img 
-                      src={photo!}
-                      alt={`Memory ${index + 1}`}
-                      className="w-full h-[calc(100%-0.75rem)] sm:h-[calc(100%-1rem)] object-cover rounded-md"
+                      src={photo.src}
+                      alt={`Cute ${index + 1}`}
+                      className="w-full h-full object-cover"
                     />
-                    {/* Mini caption */}
-                    <p className="absolute bottom-0.5 sm:bottom-1 left-0 right-0 text-center font-handwritten text-[10px] sm:text-xs text-primary truncate px-1">
-                      {cuteMessages[index % cuteMessages.length]}
-                    </p>
                   </div>
-                  
-                  {/* Random sticker on some photos */}
-                  {index % 2 === 0 && (
-                    <div className="absolute -top-1 sm:-top-2 -right-1 sm:-right-2 text-sm sm:text-lg animate-bounce-gentle z-10">
-                      {['⭐', '💖', '🌟', '✨', '🎀'][index % 5]}
-                    </div>
-                  )}
+                  {/* Mini caption */}
+                  <p className="absolute bottom-1 sm:bottom-2 left-0 right-0 text-center font-handwritten text-xs sm:text-sm text-primary truncate px-1">
+                    {photo.caption}
+                  </p>
                 </div>
-              );
-            })}
-          </div>
-        ) : (
-          <div className="text-center py-8 sm:py-12">
-            <div className="text-5xl sm:text-6xl mb-3 sm:mb-4 animate-bounce-gentle">📷</div>
-            <p className="font-cute text-muted-foreground text-sm sm:text-base">
-              No photos uploaded yet!
-            </p>
-            <p className="font-cute text-xs sm:text-sm text-muted-foreground mt-2">
-              (Your beautiful collage will appear here)
-            </p>
-          </div>
-        )}
+                
+                {/* Random sticker on some photos */}
+                {index % 2 === 0 && (
+                  <div className="absolute -top-2 -right-2 text-lg sm:text-xl animate-bounce-gentle z-10">
+                    {['⭐', '💖', '🌟', '✨', '🎀'][index % 5]}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       {/* Rotating couple blob */}
