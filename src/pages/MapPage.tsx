@@ -80,7 +80,6 @@ const MapPage = () => {
         ref={fileInputRef}
         onChange={handleFileChange}
         accept="image/*"
-        capture="user"
         className="hidden"
       />
 

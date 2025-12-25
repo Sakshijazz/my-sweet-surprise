@@ -17,8 +17,8 @@ Thank you for being my best friend, my partner, my everything. Thank you for cho
 
 Happy Birthday! May this year bring you all the happiness, success, and dreams come true that you deserve.
 
-Forever and always,
-With all my heart 🌟`;
+Yours truly,
+Anshika 💕`;
 
 const LetterPage = () => {
   const navigate = useNavigate();
