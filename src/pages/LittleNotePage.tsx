@@ -29,15 +29,15 @@ const LittleNotePage = () => {
   };
 
   return (
-    <div className={`min-h-screen bg-gradient-sunset flex flex-col items-center justify-center p-6 relative overflow-hidden transition-all duration-600 ${isExiting ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
+    <div className={`min-h-screen min-h-[100dvh] bg-gradient-sunset flex flex-col items-center justify-center px-4 py-6 sm:p-6 relative overflow-hidden transition-all duration-600 ${isExiting ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
       <Sparkles count={15} />
       
       {/* Decorative stickers */}
-      <div className="absolute top-6 left-6 text-2xl animate-float opacity-70">🌸</div>
-      <div className="absolute top-10 right-8 text-2xl animate-float opacity-60" style={{ animationDelay: '0.5s' }}>✨</div>
+      <div className="absolute top-4 sm:top-6 left-4 sm:left-6 text-xl sm:text-2xl animate-float opacity-70">🌸</div>
+      <div className="absolute top-8 sm:top-10 right-4 sm:right-8 text-xl sm:text-2xl animate-float opacity-60" style={{ animationDelay: '0.5s' }}>✨</div>
       
       {/* Header */}
-      <h2 className="text-2xl md:text-3xl font-handwritten text-foreground mb-12 text-center z-10 animate-fade-slide-up">
+      <h2 className="text-xl sm:text-2xl md:text-3xl font-handwritten text-foreground mb-8 sm:mb-12 text-center z-10 animate-fade-slide-up px-2">
         A little note for you…
       </h2>
 
@@ -48,18 +48,18 @@ const LittleNotePage = () => {
         style={{ perspective: '1000px' }}
       >
         {/* Envelope Body */}
-        <div className="relative w-64 h-44 md:w-80 md:h-56">
+        <div className="relative w-56 h-36 sm:w-64 sm:h-44 md:w-80 md:h-56">
           {/* Back of envelope */}
           <div className="absolute inset-0 bg-gradient-to-br from-amber-100 to-orange-100 rounded-xl shadow-soft border-2 border-amber-200" />
           
           {/* Inner paper (slides out) */}
           <div 
-            className={`absolute left-4 right-4 bg-white rounded-lg shadow-md transition-all duration-700 ease-out ${
-              letterSliding ? 'h-32 -top-24 md:h-40 md:-top-32' : 'h-20 top-4'
+            className={`absolute left-3 right-3 sm:left-4 sm:right-4 bg-white rounded-lg shadow-md transition-all duration-700 ease-out ${
+              letterSliding ? 'h-24 -top-20 sm:h-32 sm:-top-24 md:h-40 md:-top-32' : 'h-16 sm:h-20 top-3 sm:top-4'
             }`}
             style={{ zIndex: letterSliding ? 5 : 1 }}
           >
-            <div className="p-3 font-handwritten text-sm text-foreground">
+            <div className="p-2 sm:p-3 font-handwritten text-xs sm:text-sm text-foreground">
               {letterSliding && (
                 <>
                   <p className="text-primary font-semibold">My dearest Aditya,</p>
@@ -71,7 +71,7 @@ const LittleNotePage = () => {
           
           {/* Front flap (triangular) */}
           <div 
-            className={`absolute top-0 left-0 right-0 h-24 md:h-28 origin-top transition-all duration-500 ease-out`}
+            className={`absolute top-0 left-0 right-0 h-20 sm:h-24 md:h-28 origin-top transition-all duration-500 ease-out`}
             style={{ 
               transform: flapOpen ? 'rotateX(180deg)' : 'rotateX(0deg)',
               transformStyle: 'preserve-3d',
@@ -103,18 +103,18 @@ const LittleNotePage = () => {
           
           {/* Front of envelope (bottom part) */}
           <div 
-            className="absolute bottom-0 left-0 right-0 h-28 md:h-32 bg-gradient-to-br from-amber-200 to-orange-200 rounded-b-xl border-2 border-t-0 border-amber-300"
+            className="absolute bottom-0 left-0 right-0 h-24 sm:h-28 md:h-32 bg-gradient-to-br from-amber-200 to-orange-200 rounded-b-xl border-2 border-t-0 border-amber-300"
             style={{ zIndex: 2 }}
           >
             {/* Heart seal */}
-            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 text-3xl">
+            <div className="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2 text-2xl sm:text-3xl">
               {!flapOpen && '💌'}
             </div>
           </div>
         </div>
         
         {!isOpen && (
-          <p className="text-center mt-4 font-cute text-muted-foreground animate-pulse">
+          <p className="text-center mt-3 sm:mt-4 font-cute text-muted-foreground animate-pulse text-sm sm:text-base">
             Tap to open 📜
           </p>
         )}
@@ -122,20 +122,20 @@ const LittleNotePage = () => {
 
       {/* Letter Preview */}
       {showLetter && (
-        <div className="mt-8 z-10 animate-fade-slide-up max-w-sm">
-          <div className="bg-pastel-cream rounded-3xl p-6 shadow-glow">
-            <div className="font-handwritten text-lg text-foreground leading-relaxed">
-              <p className="mb-4 text-primary font-semibold">My dearest Aditya,</p>
-              <p className="text-muted-foreground">
+        <div className="mt-6 sm:mt-8 z-10 animate-fade-slide-up max-w-xs sm:max-w-sm px-2">
+          <div className="bg-pastel-cream rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-glow">
+            <div className="font-handwritten text-base sm:text-lg text-foreground leading-relaxed">
+              <p className="mb-3 sm:mb-4 text-primary font-semibold">My dearest Aditya,</p>
+              <p className="text-muted-foreground text-sm sm:text-base">
                 On this special day, I want you to know how much you mean to me...
               </p>
-              <p className="mt-4 text-sm text-primary italic">
+              <p className="mt-3 sm:mt-4 text-xs sm:text-sm text-primary italic">
                 (There's more to read... 🌟)
               </p>
             </div>
           </div>
           
-          <div className="mt-6 text-center">
+          <div className="mt-4 sm:mt-6 text-center">
             <CuteButton onClick={handleReadMore} variant="pulse">
               Read Full Letter 📝
             </CuteButton>
@@ -144,8 +144,8 @@ const LittleNotePage = () => {
       )}
 
       {/* Decorative elements */}
-      <div className="absolute top-16 left-8 text-2xl animate-float opacity-50">📜</div>
-      <div className="absolute bottom-16 right-8 text-2xl animate-float opacity-50" style={{ animationDelay: '1.5s' }}>🎀</div>
+      <div className="absolute top-12 sm:top-16 left-4 sm:left-8 text-xl sm:text-2xl animate-float opacity-50">📜</div>
+      <div className="absolute bottom-12 sm:bottom-16 right-4 sm:right-8 text-xl sm:text-2xl animate-float opacity-50" style={{ animationDelay: '1.5s' }}>🎀</div>
     </div>
   );
 };

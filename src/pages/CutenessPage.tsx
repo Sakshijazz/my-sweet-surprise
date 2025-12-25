@@ -59,29 +59,29 @@ const CutenessPage = () => {
   }, [showWarning]);
 
   return (
-    <div className={`min-h-screen bg-gradient-sunset flex flex-col items-center justify-center p-6 relative overflow-hidden transition-all duration-600 ${isExiting ? 'opacity-0 scale-110' : 'opacity-100 scale-100'}`}>
+    <div className={`min-h-screen min-h-[100dvh] bg-gradient-sunset flex flex-col items-center justify-center px-4 py-8 sm:p-6 relative overflow-hidden transition-all duration-600 ${isExiting ? 'opacity-0 scale-110' : 'opacity-100 scale-100'}`}>
       <FloatingElements count={20} />
       
       {/* Decorative stickers */}
-      <div className="absolute top-8 left-6 text-2xl animate-float opacity-70">🎂</div>
-      <div className="absolute top-12 right-8 text-3xl animate-float opacity-60" style={{ animationDelay: '0.5s' }}>✨</div>
+      <div className="absolute top-4 sm:top-8 left-4 sm:left-6 text-xl sm:text-2xl animate-float opacity-70">🎂</div>
+      <div className="absolute top-8 sm:top-12 right-4 sm:right-8 text-2xl sm:text-3xl animate-float opacity-60" style={{ animationDelay: '0.5s' }}>✨</div>
       
       {/* Title */}
-      <h1 className="text-2xl md:text-3xl font-handwritten text-foreground mb-12 text-center z-10 animate-fade-slide-up">
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-handwritten text-foreground mb-8 sm:mb-12 text-center z-10 animate-fade-slide-up px-2">
         Measuring Your Cuteness 🌟
       </h1>
 
       {/* Progress Section */}
-      <div className="w-full max-w-sm z-10">
+      <div className="w-full max-w-xs sm:max-w-sm z-10 px-2">
         {/* Progress Number */}
-        <div className="text-center mb-4">
-          <span className={`text-6xl md:text-7xl font-cute font-bold text-warm-gold transition-all duration-300 ${isShaking ? 'animate-shake' : ''}`}>
+        <div className="text-center mb-3 sm:mb-4">
+          <span className={`text-5xl sm:text-6xl md:text-7xl font-cute font-bold text-warm-gold transition-all duration-300 ${isShaking ? 'animate-shake' : ''}`}>
             {progress}%
           </span>
         </div>
 
         {/* Progress Bar */}
-        <div className={`relative h-6 bg-pastel-cream rounded-full overflow-hidden shadow-soft ${isShaking ? 'animate-shake' : ''}`}>
+        <div className={`relative h-5 sm:h-6 bg-pastel-cream rounded-full overflow-hidden shadow-soft ${isShaking ? 'animate-shake' : ''}`}>
           <div 
             className="h-full bg-gradient-to-r from-pastel-yellow via-warm-gold to-pastel-orange rounded-full transition-all duration-300 ease-out"
             style={{ 
@@ -100,16 +100,16 @@ const CutenessPage = () => {
         </div>
 
         {/* Status Text */}
-        <p className="text-center mt-4 text-muted-foreground font-cute text-lg">
+        <p className="text-center mt-3 sm:mt-4 text-muted-foreground font-cute text-base sm:text-lg">
           {progress < 100 ? 'Calculating your cuteness…' : 'Overflow detected!'}
         </p>
       </div>
 
       {/* Warning Message with fast toggle */}
       {showWarning && (
-        <div className="mt-8 z-10 animate-fade-slide-up">
-          <div className={`bg-card rounded-3xl p-6 shadow-glow text-center animate-gentle-bounce`}>
-            <p className="text-xl md:text-2xl font-cute font-bold text-primary transition-all duration-100">
+        <div className="mt-6 sm:mt-8 z-10 animate-fade-slide-up px-4">
+          <div className={`bg-card rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-glow text-center animate-gentle-bounce`}>
+            <p className="text-lg sm:text-xl md:text-2xl font-cute font-bold text-primary transition-all duration-100">
               {warningMessages[warningIndex]}
             </p>
           </div>
@@ -117,8 +117,8 @@ const CutenessPage = () => {
       )}
 
       {/* Decorative elements */}
-      <div className="absolute top-20 right-10 text-3xl animate-float opacity-60">🎀</div>
-      <div className="absolute bottom-20 left-10 text-3xl animate-float opacity-60" style={{ animationDelay: '1s' }}>🌻</div>
+      <div className="absolute top-16 sm:top-20 right-6 sm:right-10 text-2xl sm:text-3xl animate-float opacity-60">🎀</div>
+      <div className="absolute bottom-16 sm:bottom-20 left-6 sm:left-10 text-2xl sm:text-3xl animate-float opacity-60" style={{ animationDelay: '1s' }}>🌻</div>
     </div>
   );
 };

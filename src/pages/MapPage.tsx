@@ -59,18 +59,18 @@ const MapPage = () => {
   };
 
   return (
-    <div className={`min-h-screen bg-gradient-sunset flex flex-col items-center p-6 relative overflow-hidden transition-all duration-600 ${isExiting ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
+    <div className={`min-h-screen min-h-[100dvh] bg-gradient-sunset flex flex-col items-center px-4 py-6 sm:p-6 relative overflow-hidden transition-all duration-600 ${isExiting ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
       <Sparkles count={15} />
       
       {/* Decorative stickers */}
-      <div className="absolute top-4 left-4 text-2xl animate-float opacity-70">📸</div>
-      <div className="absolute top-8 right-6 text-2xl animate-float opacity-60" style={{ animationDelay: '0.5s' }}>🌟</div>
+      <div className="absolute top-3 sm:top-4 left-3 sm:left-4 text-xl sm:text-2xl animate-float opacity-70">📸</div>
+      <div className="absolute top-6 sm:top-8 right-4 sm:right-6 text-xl sm:text-2xl animate-float opacity-60" style={{ animationDelay: '0.5s' }}>🌟</div>
       
       {/* Header */}
-      <h1 className="text-2xl md:text-3xl font-handwritten text-foreground mt-6 mb-4 text-center z-10 animate-fade-slide-up">
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-handwritten text-foreground mt-4 sm:mt-6 mb-3 sm:mb-4 text-center z-10 animate-fade-slide-up px-2">
         Your Cute Photo Journey 📸
       </h1>
-      <p className="text-muted-foreground font-cute text-center mb-8 z-10">
+      <p className="text-muted-foreground font-cute text-center mb-6 sm:mb-8 z-10 text-sm sm:text-base px-4">
         Upload your cutest poses to unlock the surprise!
       </p>
 
@@ -85,7 +85,7 @@ const MapPage = () => {
       />
 
       {/* Map with curved path */}
-      <div className="relative w-full max-w-sm z-10 py-4">
+      <div className="relative w-full max-w-xs sm:max-w-sm z-10 py-2 sm:py-4">
         {/* Curved SVG path */}
         <svg 
           className="absolute inset-0 w-full h-full pointer-events-none" 
@@ -111,20 +111,20 @@ const MapPage = () => {
         {stages.map((stage, index) => {
           // Position stages along the curve
           const yPos = 30 + index * 100;
-          const xOffset = index % 2 === 0 ? -60 : 60;
+          const xOffset = index % 2 === 0 ? -50 : 50;
           
           return (
             <div 
               key={stage.id}
-              className="relative flex items-center mb-12 last:mb-0"
+              className="relative flex items-center mb-10 sm:mb-12 last:mb-0"
               style={{ 
                 animationDelay: `${index * 0.1}s`,
-                marginLeft: `calc(50% + ${xOffset}px - 28px)`,
+                marginLeft: `calc(50% + ${xOffset}px - 24px)`,
               }}
             >
               {/* Stage circle */}
               <div 
-                className={`w-14 h-14 rounded-full flex items-center justify-center cursor-pointer transition-all duration-500 border-4 ${
+                className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center cursor-pointer transition-all duration-500 border-4 ${
                   stage.completed 
                     ? 'bg-primary shadow-glow scale-110 border-primary/30' 
                     : stage.id === currentStage 
@@ -141,17 +141,17 @@ const MapPage = () => {
                       className="w-full h-full rounded-full object-cover"
                     />
                   ) : (
-                    <span className="text-2xl">✓</span>
+                    <span className="text-xl sm:text-2xl">✓</span>
                   )
                 ) : (
-                  <span className="text-xl font-cute font-bold text-primary-foreground">{stage.id}</span>
+                  <span className="text-lg sm:text-xl font-cute font-bold text-primary-foreground">{stage.id}</span>
                 )}
               </div>
               
               {/* Stage label */}
               <div 
-                className={`absolute w-28 p-2 rounded-2xl text-center transition-all duration-500 ${
-                  index % 2 === 0 ? 'right-full mr-4' : 'left-full ml-4'
+                className={`absolute w-24 sm:w-28 p-1.5 sm:p-2 rounded-xl sm:rounded-2xl text-center transition-all duration-500 ${
+                  index % 2 === 0 ? 'right-full mr-2 sm:mr-4' : 'left-full ml-2 sm:ml-4'
                 } ${stage.completed ? 'bg-pastel-cream shadow-soft' : 'bg-card'}`}
               >
                 <p className="font-cute text-xs text-foreground">{stage.name}</p>
@@ -165,7 +165,7 @@ const MapPage = () => {
       </div>
 
       {/* Unlock Button */}
-      <div className="mt-auto mb-8 z-10">
+      <div className="mt-auto mb-6 sm:mb-8 z-10">
         <CuteButton 
           onClick={handleOpenSurprise}
           variant={allCompleted ? 'pulse' : 'primary'}
@@ -176,11 +176,11 @@ const MapPage = () => {
       </div>
 
       {/* Progress indicator */}
-      <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
+      <div className="absolute bottom-3 sm:bottom-4 left-0 right-0 flex justify-center gap-1.5 sm:gap-2 z-10">
         {stages.map(stage => (
           <div 
             key={stage.id}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+            className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-300 ${
               stage.completed ? 'bg-primary' : 'bg-muted'
             }`}
           />
@@ -188,8 +188,8 @@ const MapPage = () => {
       </div>
       
       {/* Bottom stickers */}
-      <div className="absolute bottom-20 left-6 text-2xl animate-float opacity-60" style={{ animationDelay: '1s' }}>🎀</div>
-      <div className="absolute bottom-24 right-8 text-xl animate-float opacity-70" style={{ animationDelay: '1.2s' }}>✨</div>
+      <div className="absolute bottom-16 sm:bottom-20 left-4 sm:left-6 text-xl sm:text-2xl animate-float opacity-60" style={{ animationDelay: '1s' }}>🎀</div>
+      <div className="absolute bottom-20 sm:bottom-24 right-4 sm:right-8 text-lg sm:text-xl animate-float opacity-70" style={{ animationDelay: '1.2s' }}>✨</div>
     </div>
   );
 };
