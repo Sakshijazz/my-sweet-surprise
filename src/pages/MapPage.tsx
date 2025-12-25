@@ -1,59 +1,45 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sparkles from '@/components/Sparkles';
 import CuteButton from '@/components/CuteButton';
 
-interface Stage {
+import teddyImg from '@/assets/teddy.jpg';
+import ghostImg from '@/assets/cute-ghost.jpg';
+import bunnyImg from '@/assets/cute-bunny.jpg';
+import puppyImg from '@/assets/cute-puppy.jpg';
+import octopusImg from '@/assets/cute-octopus.jpg';
+import rabbitImg from '@/assets/cute-rabbit.jpg';
+
+interface ComplimentCard {
   id: number;
-  name: string;
-  completed: boolean;
-  photo: string | null;
+  image: string;
+  compliment: string;
+  revealed: boolean;
+  position: { top: string; left: string };
+  delay: number;
 }
 
 const MapPage = () => {
   const navigate = useNavigate();
-  const [stages, setStages] = useState<Stage[]>([
-    { id: 1, name: 'Your cutest smile 😊', completed: false, photo: null },
-    { id: 2, name: 'A silly pose 🤪', completed: false, photo: null },
-    { id: 3, name: 'Your happy face 🥰', completed: false, photo: null },
-    { id: 4, name: 'A funny expression 😜', completed: false, photo: null },
-    { id: 5, name: 'Your best pose 💖', completed: false, photo: null },
+  const [cards, setCards] = useState<ComplimentCard[]>([
+    { id: 1, image: teddyImg, compliment: "You're the cutest person ever! 🧸", revealed: false, position: { top: '8%', left: '15%' }, delay: 0 },
+    { id: 2, image: ghostImg, compliment: "You make my heart so happy! 👻💕", revealed: false, position: { top: '25%', left: '60%' }, delay: 0.2 },
+    { id: 3, image: bunnyImg, compliment: "Your smile lights up my world! 🐰", revealed: false, position: { top: '42%', left: '20%' }, delay: 0.4 },
+    { id: 4, image: puppyImg, compliment: "You're pawsitively amazing! 🐕", revealed: false, position: { top: '55%', left: '55%' }, delay: 0.6 },
+    { id: 5, image: octopusImg, compliment: "I'm so lucky to know you! 🐙", revealed: false, position: { top: '72%', left: '25%' }, delay: 0.8 },
+    { id: 6, image: rabbitImg, compliment: "You're absolutely wonderful! 🐇", revealed: false, position: { top: '75%', left: '65%' }, delay: 1 },
   ]);
-  const [currentStage, setCurrentStage] = useState(1);
   const [isExiting, setIsExiting] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const allCompleted = stages.every(s => s.completed);
+  const allRevealed = cards.every(c => c.revealed);
 
-  const handleStageClick = (stageId: number) => {
-    if (stageId <= currentStage) {
-      setCurrentStage(stageId);
-      fileInputRef.current?.click();
-    }
+  const handleCardClick = (cardId: number) => {
+    setCards(prev => prev.map(c => 
+      c.id === cardId ? { ...c, revealed: true } : c
+    ));
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setStages(prev => prev.map(s => 
-          s.id === currentStage 
-            ? { ...s, completed: true, photo: reader.result as string }
-            : s
-        ));
-        if (currentStage < 5) {
-          setCurrentStage(currentStage + 1);
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-    e.target.value = '';
-  };
-
-  const handleOpenSurprise = () => {
-    // Store photos in sessionStorage for gallery
-    sessionStorage.setItem('uploadedPhotos', JSON.stringify(stages.map(s => s.photo)));
+  const handleContinue = () => {
     setIsExiting(true);
     setTimeout(() => navigate('/surprise'), 600);
   };
@@ -63,124 +49,90 @@ const MapPage = () => {
       <Sparkles count={15} />
       
       {/* Decorative stickers */}
-      <div className="absolute top-3 sm:top-4 left-3 sm:left-4 text-xl sm:text-2xl animate-float opacity-70">📸</div>
+      <div className="absolute top-3 sm:top-4 left-3 sm:left-4 text-xl sm:text-2xl animate-float opacity-70">💖</div>
       <div className="absolute top-6 sm:top-8 right-4 sm:right-6 text-xl sm:text-2xl animate-float opacity-60" style={{ animationDelay: '0.5s' }}>🌟</div>
       
       {/* Header */}
-      <h1 className="text-xl sm:text-2xl md:text-3xl font-handwritten text-foreground mt-4 sm:mt-6 mb-3 sm:mb-4 text-center z-10 animate-fade-slide-up px-2">
-        Your Cute Photo Journey 📸
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-handwritten text-foreground mt-4 sm:mt-6 mb-2 sm:mb-3 text-center z-10 animate-fade-slide-up px-2">
+        Tap the Cuties for Compliments! 💝
       </h1>
-      <p className="text-muted-foreground font-cute text-center mb-6 sm:mb-8 z-10 text-sm sm:text-base px-4">
-        Upload your cutest poses to unlock the surprise!
+      <p className="text-muted-foreground font-cute text-center mb-4 sm:mb-6 z-10 text-sm sm:text-base px-4">
+        Each little friend has a special message for you ✨
       </p>
 
-      {/* Hidden file input */}
-      <input
-        type="file"
-        ref={fileInputRef}
-        onChange={handleFileChange}
-        accept="image/*"
-        className="hidden"
-      />
-
-      {/* Map with curved path */}
-      <div className="relative w-full max-w-xs sm:max-w-sm z-10 py-2 sm:py-4">
-        {/* Curved SVG path */}
-        <svg 
-          className="absolute inset-0 w-full h-full pointer-events-none" 
-          viewBox="0 0 300 500"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M 150 30 
-               Q 50 80, 150 130 
-               Q 250 180, 150 230 
-               Q 50 280, 150 330 
-               Q 250 380, 150 430
-               Q 50 480, 150 480"
-            fill="none"
-            stroke="hsl(45 80% 85%)"
-            strokeWidth="8"
-            strokeLinecap="round"
-            strokeDasharray="12 8"
-            className="opacity-60"
-          />
-        </svg>
-        
-        {stages.map((stage, index) => {
-          // Position stages along the curve
-          const yPos = 30 + index * 100;
-          const xOffset = index % 2 === 0 ? -50 : 50;
-          
-          return (
-            <div 
-              key={stage.id}
-              className="relative flex items-center mb-10 sm:mb-12 last:mb-0"
-              style={{ 
-                animationDelay: `${index * 0.1}s`,
-                marginLeft: `calc(50% + ${xOffset}px - 24px)`,
-              }}
-            >
-              {/* Stage circle */}
-              <div 
-                className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center cursor-pointer transition-all duration-500 border-4 ${
-                  stage.completed 
-                    ? 'bg-primary shadow-glow scale-110 border-primary/30' 
-                    : stage.id === currentStage 
-                      ? 'bg-accent animate-gentle-bounce shadow-soft border-accent/30' 
-                      : 'bg-muted opacity-60 border-muted/30'
-                }`}
-                onClick={() => handleStageClick(stage.id)}
-              >
-                {stage.completed ? (
-                  stage.photo ? (
-                    <img 
-                      src={stage.photo} 
-                      alt={`Stage ${stage.id}`}
-                      className="w-full h-full rounded-full object-cover"
-                    />
-                  ) : (
-                    <span className="text-xl sm:text-2xl">✓</span>
-                  )
-                ) : (
-                  <span className="text-lg sm:text-xl font-cute font-bold text-primary-foreground">{stage.id}</span>
-                )}
+      {/* Floating Cards Area */}
+      <div className="relative w-full max-w-sm sm:max-w-md flex-1 min-h-[400px] sm:min-h-[450px] z-10">
+        {cards.map((card) => (
+          <div 
+            key={card.id}
+            className="absolute animate-float cursor-pointer transition-all duration-500 hover:scale-110"
+            style={{ 
+              top: card.position.top, 
+              left: card.position.left,
+              animationDelay: `${card.delay}s`,
+            }}
+            onClick={() => handleCardClick(card.id)}
+          >
+            {/* Card Container */}
+            <div className={`relative transition-all duration-500 ${card.revealed ? 'scale-105' : ''}`}>
+              {/* Cute Character Image */}
+              <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-4 shadow-glow transition-all duration-300 ${
+                card.revealed ? 'border-primary ring-4 ring-primary/30' : 'border-card hover:border-accent'
+              }`}>
+                <img 
+                  src={card.image} 
+                  alt="Cute character"
+                  className="w-full h-full object-cover"
+                />
               </div>
               
-              {/* Stage label */}
-              <div 
-                className={`absolute w-24 sm:w-28 p-1.5 sm:p-2 rounded-xl sm:rounded-2xl text-center transition-all duration-500 ${
-                  index % 2 === 0 ? 'right-full mr-2 sm:mr-4' : 'left-full ml-2 sm:ml-4'
-                } ${stage.completed ? 'bg-pastel-cream shadow-soft' : 'bg-card'}`}
-              >
-                <p className="font-cute text-xs text-foreground">{stage.name}</p>
-                {stage.id === currentStage && !stage.completed && (
-                  <p className="text-xs text-primary mt-1 animate-pulse">Tap to upload!</p>
-                )}
-              </div>
+              {/* Sparkle indicator when not revealed */}
+              {!card.revealed && (
+                <div className="absolute -top-1 -right-1 text-lg animate-pulse">
+                  ✨
+                </div>
+              )}
+              
+              {/* Check mark when revealed */}
+              {card.revealed && (
+                <div className="absolute -top-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-primary rounded-full flex items-center justify-center text-xs shadow-soft">
+                  💖
+                </div>
+              )}
+              
+              {/* Compliment bubble */}
+              {card.revealed && (
+                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-32 sm:w-40 bg-card rounded-xl p-2 shadow-glow animate-scale-in z-20">
+                  <p className="font-cute text-xs text-center text-foreground">
+                    {card.compliment}
+                  </p>
+                  {/* Speech bubble triangle */}
+                  <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-b-8 border-l-transparent border-r-transparent border-b-card"></div>
+                </div>
+              )}
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
 
-      {/* Unlock Button */}
+      {/* Continue Button */}
       <div className="mt-auto mb-6 sm:mb-8 z-10">
         <CuteButton 
-          onClick={handleOpenSurprise}
-          variant={allCompleted ? 'pulse' : 'primary'}
-          disabled={!allCompleted}
+          onClick={handleContinue}
+          variant={allRevealed ? 'pulse' : 'primary'}
+          disabled={!allRevealed}
         >
-          {allCompleted ? 'Open Your Surprise 🎀' : `Upload ${5 - stages.filter(s => s.completed).length} more photos`}
+          {allRevealed ? 'Continue to Surprise 🎀' : `Tap ${6 - cards.filter(c => c.revealed).length} more cuties`}
         </CuteButton>
       </div>
 
       {/* Progress indicator */}
       <div className="absolute bottom-3 sm:bottom-4 left-0 right-0 flex justify-center gap-1.5 sm:gap-2 z-10">
-        {stages.map(stage => (
+        {cards.map(card => (
           <div 
-            key={stage.id}
+            key={card.id}
             className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-300 ${
-              stage.completed ? 'bg-primary' : 'bg-muted'
+              card.revealed ? 'bg-primary' : 'bg-muted'
             }`}
           />
         ))}
