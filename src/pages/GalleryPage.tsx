@@ -138,21 +138,26 @@ const GalleryPage = () => {
       {/* Final Button */}
       {!showFinal && (
         <div className="z-10 mb-4 sm:mb-6 animate-fade-slide-up" style={{ animationDelay: '0.8s' }}>
+          <p className="text-center font-handwritten text-lg sm:text-xl text-foreground mb-3">Are you impressed? 🥺</p>
           <CuteButton onClick={handleForeverClick} variant="pulse">
-            Forever Yours 🌟
+            Yes! 💕
           </CuteButton>
         </div>
       )}
 
       {/* Final Message */}
       {showFinal && (
-        <div className="z-10 text-center animate-fade-slide-up mb-4 sm:mb-6 px-4">
-          <div className="bg-card rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-glow max-w-xs sm:max-w-sm">
-            <h2 className="text-lg sm:text-xl md:text-2xl font-handwritten text-primary mb-2 sm:mb-3 glow-text animate-shimmer bg-clip-text">
-              You will always be special to me 🌟
+        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-slide-up">
+          <div className="bg-card rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-glow max-w-xs sm:max-w-sm text-center">
+            <div className="text-4xl sm:text-5xl mb-4">🎂</div>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-handwritten text-primary mb-3 sm:mb-4 glow-text animate-shimmer bg-clip-text">
+              Happy Birthday, Aditya!
             </h2>
-            <p className="font-cute text-xs sm:text-sm text-muted-foreground">
-              Happy Birthday, Aditya! May all your dreams come true. 🎂✨
+            <p className="font-cute text-sm sm:text-base text-muted-foreground mb-2">
+              May all your dreams come true! ✨
+            </p>
+            <p className="font-handwritten text-primary text-lg">
+              With love, Sakshi 💕
             </p>
           </div>
         </div>
