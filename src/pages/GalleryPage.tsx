@@ -26,7 +26,7 @@ const staticPhotos = [
   { src: teddyImg, caption: "So adorable! 🧸" },
   { src: ghostImg, caption: "Cutie! 👻" },
   { src: bunnyImg, caption: "Precious! 🐰" },
-  { src: aditya1Img, caption: "My love! 💕" },
+  { src: aditya1Img, caption: "Looking cool! 😎" },
   { src: aditya2Img, caption: "So handsome! ✨" },
   { src: aditya3Img, caption: "Dapper! 🌟" },
 ];
