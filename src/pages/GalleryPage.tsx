@@ -7,9 +7,9 @@ import CuteButton from '@/components/CuteButton';
 import teddyImg from '@/assets/teddy.jpg';
 import ghostImg from '@/assets/cute-ghost.jpg';
 import bunnyImg from '@/assets/cute-bunny.jpg';
-import puppyImg from '@/assets/cute-puppy.jpg';
-import octopusImg from '@/assets/cute-octopus.jpg';
-import rabbitImg from '@/assets/cute-rabbit.jpg';
+import aditya1Img from '@/assets/aditya-1.jpg';
+import aditya2Img from '@/assets/aditya-2.jpg';
+import aditya3Img from '@/assets/aditya-3.jpg';
 
 // Varying sizes for collage photos
 const photoStyles = [
@@ -26,9 +26,9 @@ const staticPhotos = [
   { src: teddyImg, caption: "So adorable! 🧸" },
   { src: ghostImg, caption: "Cutie! 👻" },
   { src: bunnyImg, caption: "Precious! 🐰" },
-  { src: puppyImg, caption: "My fave! 🐕" },
-  { src: octopusImg, caption: "Aww! 🐙" },
-  { src: rabbitImg, caption: "Sweet! 🐇" },
+  { src: aditya1Img, caption: "My love! 💕" },
+  { src: aditya2Img, caption: "So handsome! ✨" },
+  { src: aditya3Img, caption: "Dapper! 🌟" },
 ];
 
 // Scattered stickers with varying sizes
