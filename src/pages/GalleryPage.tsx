@@ -153,11 +153,8 @@ const GalleryPage = () => {
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-handwritten text-primary mb-3 sm:mb-4 glow-text animate-shimmer bg-clip-text">
               Happy Birthday, Aditya!
             </h2>
-            <p className="font-cute text-sm sm:text-base text-muted-foreground mb-2">
+            <p className="font-cute text-sm sm:text-base text-muted-foreground">
               May all your dreams come true! ✨
-            </p>
-            <p className="font-handwritten text-primary text-lg">
-              With love, Sakshi 💕
             </p>
           </div>
         </div>
